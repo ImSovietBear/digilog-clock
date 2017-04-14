@@ -14,5 +14,7 @@ Things todo:
 
 Cur ver: 0.5
 
+Requires: FastLED library(http://fastled.io/) 
+
 License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 Made by: Elijah W. Reeds
