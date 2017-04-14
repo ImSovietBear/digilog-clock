@@ -4,8 +4,12 @@
 #include <FastLED.h>
 
 #define LED_COUNT 36 // 36 total LEDS 0-11 are for hour, and 12 - 35 are minutes. one minute led for every number and inbetween every two numbers on a clock face (12 hr clock).
-#define LED_PIN  //The datapin for the WS2812 pin.
+#define LED_PIN 4//The datapin for the WS2812 pin.
+#define B_UP 8//button for brightness up.
+#define B_DOWN 9//button for brightness down.
 
+long previousTime = 0;
+long interval = 200;
 
 int curSec = 28;  //current time variables
 int curHour = 11; 
@@ -21,6 +25,7 @@ int minR = 255; //minute LED color.
 int minG = 0;
 int minB = 0;
 
+int potIn = 0;
 int rBright = 10; //Raw brightness.
 int bright = 0; //Acts as the reverse of the brightness input so that setting a high brightness lowers the amount to devide the color values
 
@@ -30,6 +35,9 @@ void setup() {
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, LED_COUNT);//fastled setup.
   
   Serial.begin(9600);//start serial communications for debugging and other uses.
+
+  pinMode(B_UP, INPUT);//sets pinmodes for brightness buttons.
+  pinMode(B_DOWN, INPUT);
   
   for(int z = 0; z < 2; z++){//Startup animaiton... Pretty.
     for(int i = 0; i < LED_COUNT; i++){
@@ -59,34 +67,29 @@ void setup() {
 }
 
 void loop() {
+
+  unsigned long currentTime = millis();//keeps input from instantly repeating without delaying the entire program.
+  if(currentTime - previousTime > interval){
+
+    previousTime = currentTime;
+    
+    if(digitalRead(B_UP) == HIGH && rBright < 10){
+      rBright++;
+      delay(200);
+    }else if(digitalRead(B_DOWN) == HIGH && rBright > 0){
+      rBright--;
+      delay(200);
+    }
+  }
+  
   if(rBright >= 0 && rBright < 11){ //reverses the brightness input so that setting a high brightness lowers the devision of the color values. Also sets the brightness to five if its out of the range of 0-10.
     bright = 10 - rBright;
   }else{
     bright = 5;
   }
 
-  delay(1000); //keeps time innacurately. Gross, still better than nothing. Waitin' on that RTC.
-  curSec++;
-
-  if(curSec >= 60){
-    curSec = 0;
-    curMin++; 
-  }
-
-  if(curMin >= 60){
-    curMin = 0;
-    curHour++;
-  }
-
-  if(curHour >= 13){
-    curHour = 1;
-  }
   
   disTime(curHour,hourR,hourG,hourB,curMin,minR,minG,minB);//calls the disTime (display time) function.
-
-  
-  
-  
 }
 
 void disTime(int hr,int hrr,int hrg,int hrb,float mn,int mnr,int mng,int mnb){//This function takes in color and time values then
