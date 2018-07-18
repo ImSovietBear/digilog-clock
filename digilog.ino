@@ -1,6 +1,14 @@
 //Digilog clock firmware v0.5 By Elijah Reeds
-//This software is under the by-nc-sa 4.0 license.
-//License details: https://creativecommons.org/licenses/by-nc-sa/4.0/
+/*Copyright 2018 Elijah Reeds
+
+This file is part of digilog-clock.
+
+digilog-clock is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+digilog-clock is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with Foobar. If not, see http://www.gnu.org/licenses/.
+*/
 #include <FastLED.h>
 
 #define LED_COUNT 36 // 36 total LEDS 0-11 are for hour, and 12 - 35 are minutes. one minute led for every number and inbetween every two numbers on a clock face (12 hr clock).
