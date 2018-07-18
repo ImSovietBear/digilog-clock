@@ -16,5 +16,5 @@ Cur ver: 0.5
 
 Requires: FastLED library(http://fastled.io/) 
 
-License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+License: Gnu GPL v3
 Made by: Elijah W. Reeds
